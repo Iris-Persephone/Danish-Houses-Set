@@ -1,2 +1,4 @@
 # git shouldn't track the compiled GRF, as that can be built from source whenever necessary
 *.grf
+# also ignore the standalone Windows NML compiler
+nmlc.exe
