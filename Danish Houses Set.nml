@@ -1,0 +1,54 @@
+grf {
+    grfid: "ISH\01";
+    name: string(STR_GRF_NAME);
+    desc: string(STR_GRF_DESC);
+    version: 0;
+    min_compatible_version: 0;
+}
+
+template template_object_2x1 (sprite_number) {
+    // each sprite is 96x128 and there is a 10px gutter
+    // "sprite_number" is the spriteset to grab (counting from 0 from the top)
+    // excuse the magic numbers but I can't really define constants in NML and arguments are too much work for every call
+    // the sprite offsets are rule-of-thumbed and need to be manually aligned
+    [0 * 96 + 0 * 10, sprite_number * 128 + sprite_number * 10, 96, 128, -48, -64]
+    [1 * 96 + 1 * 10, sprite_number * 128 + sprite_number * 10, 96, 128, -48, -64]
+    [2 * 96 + 2 * 10, sprite_number * 128 + sprite_number * 10, 96, 128, -48, -64]
+    [3 * 96 + 3 * 10, sprite_number * 128 + sprite_number * 10, 96, 128, -48, -64]
+}
+
+spriteset (spriteset_object_wooden_ship, "gfx/DKEC2x1.png") {
+    template_object_2x1(1)
+}
+
+spritelayout spritelayout_object_wooden_ship {
+    ground {
+        sprite: spriteset_object_wooden_ship(2);
+    }
+    building {
+        sprite: spriteset_object_wooden_ship(1);
+    }
+}
+
+item (FEAT_OBJECTS, object_wooden_ship) {
+    //NOTE: Almost all of these properties have been basically fabricaed from thin air for testing purposes, and will need to be replaced
+    property {
+        class: "ARTF";
+        classname: string(STR_NAME_CLASS_ARTEFACTS);
+        name: string(STR_NAME_OBJECT_WOODEN_SHIP);
+        climates_available: bitmask(CLIMATE_TEMPERATE, CLIMATE_TROPICAL, CLIMATE_ARCTIC);
+        size: [1, 2];
+        height: 11;
+        //TODO: the costs should be "balanced", but this is a test build so I don't care about that right now
+        build_cost_multiplier: 1;
+        remove_cost_multiplier: 1;
+        introduction_date: date(1900, 1, 1);
+        end_of_life_date: date(2500, 1, 1);
+        
+    }
+
+    graphics {
+        default: spritelayout_object_wooden_ship;
+        purchase: spritelayout_object_wooden_ship;
+    }
+}

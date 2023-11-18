@@ -2,3 +2,5 @@
 *.grf
 # also ignore the standalone Windows NML compiler
 nmlc.exe
+# nmlc makes various cache files, we don't want those either
+/.nmlcache
